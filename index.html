@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MLE – Medical Licensing Examination</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700;900&family=Merriweather:wght@400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --blue:#2f67ab;
+  --blue2:#306bb0;
+  --blue3:#3374ba;
+  --navy:#16345a;
+  --navy-dark:#0e2342;
+  --navy-deep:#0a1a33;
+  --tab:#0b1f3d;
+  --orange:#e0812d;
+  --white:#fff;
+  --modal-head:#0b6bb0;
+  --ink:#0a3560;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{background:var(--navy);}
+body{font-family:'Roboto',Arial,sans-serif;color:#fff;line-height:1.35;min-height:100vh;display:flex;flex-direction:column}
+a{color:inherit}
+button{font-family:inherit;cursor:pointer}
+
+/* HEADER */
+header{background:var(--blue);height:120px;padding:0 46px;display:flex;align-items:center;justify-content:space-between;border-bottom:2px solid #1e4a85}
+.brand{display:flex;align-items:center;gap:14px;text-decoration:none}
+.brand svg{width:66px;height:68px}
+.brand .mle{font-size:56px;font-weight:900;letter-spacing:-1px;line-height:1}
+.brand .divider{width:1px;height:58px;background:rgba(255,255,255,.35);margin:0 4px}
+.brand .full{font-family:'Merriweather',Georgia,serif;font-size:15px;line-height:1.28;color:#e8eef7}
+.hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:16px}
+.user{font-size:22px;font-weight:500;display:flex;align-items:center;gap:14px}
+.user svg{width:16px;height:16px}
+.hdr-right nav{display:flex;gap:36px;font-size:20px}
+.hdr-right nav a{text-decoration:none;background:none;border:0;color:#fff;font-size:20px}
+.hdr-right nav a:hover{text-decoration:underline}
+
+/* NOTICE */
+.notice{margin:18px 22px 0;border:2px solid var(--orange);background:var(--blue);padding:19px 20px;font-size:18px}
+.notice a{font-weight:700}
+
+/* LAYOUT */
+.wrap{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 431px;gap:65px;padding:22px 22px 70px 22px;align-items:start}
+main{padding-left:28px;padding-top:28px}
+
+/* STEPPER */
+.stepper{display:flex;margin-bottom:26px}
+.stepper .s{width:181px;display:flex;align-items:center;gap:13px;font-size:13px;text-transform:uppercase;letter-spacing:.2px;line-height:1.3;color:#e9eef6}
+.stepper .n{width:21px;height:21px;flex:none;background:var(--tab);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500}
+.stepper .n.on{background:var(--orange)}
+.stepper .n svg{width:11px;height:11px}
+
+h1{font-size:76px;font-weight:700;line-height:1.1;color:var(--orange);letter-spacing:-.5px;margin-bottom:34px}
+h1 span{color:#fff;font-weight:900}
+
+/* TABS */
+.tabs{display:flex;gap:10px;border-bottom:3px solid var(--tab);width:100%;max-width:1068px}
+.tab{background:var(--tab);border:0;color:#fff;font-size:40px;padding:12px 36px 14px;line-height:1.2;margin-bottom:0;height:76px;margin-top:0}
+.tab.active{background:var(--navy);border:3px solid var(--tab);border-bottom:0;box-shadow:inset 0 0 0 1px #0b1f3d;margin-bottom:-3px;height:76px;padding-top:12px;font-size:40px;position:relative;top:0}
+.tab.active::after{content:"";position:absolute;left:0;right:0;bottom:-3px;height:3px;background:var(--navy)}
+.panel{display:none;max-width:1068px;padding:46px 18px 0}
+.panel.show{display:block}
+
+.panel h2.cong{font-size:40px;font-weight:700;color:var(--orange);line-height:1.15}
+.panel p.elig{font-size:28px;margin-top:30px;max-width:980px;line-height:1.3}
+.panel p.elig b{font-weight:700}
+.datebox{margin-top:30px;background:var(--navy-dark);border:1px solid #1c3a63;width:763px;max-width:100%;padding:23px 22px;display:flex;align-items:center;gap:20px;font-size:22px}
+.datebox svg{width:26px;height:26px;flex:none}
+h2.want{font-size:40px;font-weight:700;color:var(--orange);margin-top:66px}
+.cards{display:grid;grid-template-columns:repeat(3,332px);gap:18px;margin-top:30px}
+.card{background:var(--blue);padding:25px 23px 22px;font-size:20px;font-weight:500;display:flex;flex-direction:column;gap:22px;min-height:127px}
+.card svg{width:36px;height:30px}
+
+.locked{margin-top:0;background:var(--navy-dark);border:1px solid #1c3a63;padding:36px 44px 40px;max-width:100%}
+.locked .row{display:flex;align-items:center;gap:22px}
+.locked svg{width:34px;height:42px;flex:none}
+.locked h2{font-size:40px;color:var(--orange);font-weight:700}
+.locked p{font-size:28px;margin-top:14px}
+
+/* SIDEBAR */
+aside{display:flex;flex-direction:column}
+.box{padding:40px 27px 36px}
+.box h3{font-size:24px;font-weight:700;margin-bottom:12px;line-height:1.3}
+.box a{display:block;font-size:20px;text-decoration:underline;margin-bottom:11px;background:none;border:0;color:#fff;text-align:left;cursor:pointer;padding:0}
+.box.b1{background:var(--blue);padding-bottom:52px}
+.box.b1 h3{margin-bottom:6px}
+.box.b1 a.gap{margin-top:34px}
+.box.b2{background:var(--blue2);padding-bottom:48px}
+.box.b2 a{margin-bottom:10px}
+.box.b3{background:var(--blue3);padding-bottom:42px}
+
+/* FOOTER */
+footer{background:var(--navy-deep);height:78px;padding:0 46px;display:flex;align-items:center;justify-content:space-between;font-size:16px;color:#aab4c4}
+footer nav{display:flex;gap:28px}
+footer nav a{text-decoration:none;color:#aab4c4}
+footer nav a:hover{color:#fff}
+.after{height:48px;background:var(--navy)}
+
+/* FLOATING HELP */
+.help{position:fixed;right:18px;bottom:18px;width:60px;height:60px;border-radius:50%;background:#10265a;border:0;color:#fff;display:flex;align-items:center;justify-content:center;box-shadow:0 4px 14px rgba(0,0,0,.4);z-index:20}
+.help svg{width:32px;height:32px}
+.help::after{content:"";position:absolute;top:2px;right:2px;width:11px;height:11px;border-radius:50%;background:#e5383b}
+
+/* MODALS */
+.overlay{position:fixed;inset:0;background:rgba(2,18,40,.62);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);display:none;align-items:center;justify-content:center;z-index:50;padding:20px}
+.overlay.show{display:flex}
+.modal{background:#fff;width:720px;max-width:100%;max-height:calc(100vh - 40px);overflow:auto;color:#1f3a57;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.m-head{background:var(--modal-head);border-bottom:4px solid var(--orange);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 26px;height:74px;position:sticky;top:0}
+.m-head h2{font-size:22px;font-weight:700;display:flex;align-items:center;gap:12px}
+.m-head h2 svg{width:22px;height:22px}
+.m-close{background:none;border:0;color:#fff;padding:6px;display:flex}
+.m-close svg{width:18px;height:18px}
+.m-body{padding:4px 26px 22px}
+
+/* FAQ */
+.faq{border-bottom:1px solid #dde3ea}
+.faq:last-child{border-bottom:0}
+.faq button{width:100%;background:none;border:0;display:flex;justify-content:space-between;align-items:center;padding:18px 0 8px;font-size:17px;font-weight:700;color:var(--ink);text-align:left}
+.faq button svg{width:16px;height:16px;transition:transform .2s;flex:none}
+.faq.closed button svg{transform:rotate(180deg)}
+.faq .a{font-size:16px;line-height:1.5;padding:4px 0 20px;color:#2a4260}
+.faq.closed .a{display:none}
+.faq.closed button{padding-bottom:18px}
+
+/* ANNOUNCEMENTS */
+.ann{display:flex;gap:42px;padding:22px 26px;border-bottom:1px solid #dde3ea}
+.ann:last-child{border-bottom:0}
+.m-body.flush{padding:0}
+.date{width:50px;text-align:center;flex:none;color:#4a5d75}
+.date .mo{font-size:14px;letter-spacing:.5px;display:block}
+.date .d{font-size:30px;font-weight:700;color:var(--ink);line-height:1.1}
+.ann .cat{font-size:13px;font-weight:700;color:var(--orange);letter-spacing:.3px;text-transform:uppercase}
+.ann h4{font-size:20px;font-weight:700;color:var(--ink);margin:2px 0 6px}
+.ann p{font-size:15.5px;line-height:1.45;color:#2a4260}
+
+/* ELIGIBILITY */
+.status{background:#eef6fd;border-left:4px solid var(--modal-head);padding:18px 20px;font-size:16px;margin:24px 0 8px;color:#1f3a57}
+.status b{color:var(--ink)}
+.m-body h3{font-size:22px;font-weight:700;color:var(--ink);margin:26px 0 14px}
+.checks{list-style:none;display:flex;flex-direction:column;gap:12px}
+.checks li{display:flex;gap:14px;align-items:flex-start;font-size:16px;line-height:1.4}
+.checks li i{flex:none;width:22px;height:22px;border-radius:50%;background:var(--orange);display:flex;align-items:center;justify-content:center;margin-top:1px}
+.checks li i svg{width:12px;height:12px}
+.m-body p.small{font-size:15.5px;line-height:1.5;color:#2a4260}
+
+/* RESPONSIVE */
+@media (max-width:1200px){
+  .wrap{grid-template-columns:1fr;gap:20px}
+  aside{max-width:480px}
+  .cards{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  h1{font-size:60px}
+  .stepper{flex-wrap:wrap;gap:14px 0}
+}
+@media (max-width:700px){
+  header{height:auto;flex-direction:column;align-items:flex-start;gap:14px;padding:16px 20px}
+  .brand .mle{font-size:44px}
+  .hdr-right{align-items:flex-start}
+  .hdr-right nav{gap:20px}
+  .user{font-size:18px}
+  main{padding-left:6px}
+  h1{font-size:42px}
+  .tab{font-size:22px;padding:8px 16px;height:56px}
+  .tab.active{height:56px;font-size:22px}
+  .panel{padding:30px 4px 0}
+  .panel h2.cong,h2.want,.locked h2{font-size:28px}
+  .panel p.elig,.locked p{font-size:20px}
+  .datebox{font-size:17px;width:100%}
+  .stepper .s{width:50%}
+  footer{flex-direction:column;height:auto;padding:20px;gap:10px}
+  .ann{gap:20px;padding:18px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <a class="brand" href="#">
+    <svg viewBox="0 0 66 68" aria-hidden="true">
+      <polygon points="0,30 40,18 44,34 4,46" fill="#e0812d"/>
+      <polygon points="44,34 62,28 66,44 48,50" fill="#e0812d"/>
+      <polygon points="22,0 38,0 30,68 14,68" fill="#0b1f3d" transform="skewX(0) rotate(8 30 34)"/>
+    </svg>
+    <span class="mle">MLE</span>
+    <span class="divider"></span>
+    <span class="full">Medical<br>Licensing<br>Examination</span>
+  </a>
+  <div class="hdr-right">
+    <div class="user">Welcome, FNU Jonty Gill</div>
+    <nav>
+      <a href="#">Home</a>
+      <a href="#">Contact Us</a>
+      <a href="#" data-open="faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<div class="notice">Due to current sanctions regulations, services may be unavailable to individuals located or ordinarily residing in certain restricted regions. Please <a href="#"><b>contact us</b></a> if you have questions.</div>
+
+<div class="wrap">
+  <main>
+    <div class="stepper">
+      <div class="s"><span class="n on"><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.5l3 3 5-6"/></svg></span><span>Apply for<br>Certification</span></div>
+      <div class="s"><span class="n on">2</span><span>Complete Step 1</span></div>
+      <div class="s"><span class="n">3</span><span>Complete Step 2<br>CK</span></div>
+      <div class="s"><span class="n">4</span><span>Obtain<br>Certification</span></div>
+      <div class="s"><span class="n">5</span><span>Complete Step 3</span></div>
+      <div class="s"><span class="n">6</span><span>Apply for<br>Licensure</span></div>
+    </div>
+
+    <h1>Welcome Back, <span>FNU</span></h1>
+
+    <div class="tabs" role="tablist">
+      <button class="tab active" data-tab="p1" role="tab">Step 1</button>
+      <button class="tab" data-tab="p2" role="tab">Step 2 CK</button>
+      <button class="tab" data-tab="p3" role="tab">Step 3</button>
+    </div>
+
+    <section class="panel show" id="p1">
+      <h2 class="cong">Congratulations<br>Your Registration is Approved for Step 1.</h2>
+      <p class="elig">Your eligibility period is <b>October 1, 2026</b> to <b>December 31, 2026</b> and your testing region is <b>India</b>.</p>
+      <div class="datebox">
+        <svg viewBox="0 0 26 26" fill="none" stroke="#e0812d" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="20" height="18" rx="2"/><path d="M3 11h20M8 2v5M18 2v5"/></svg>
+        Your scheduled test date will show here soon.
+      </div>
+
+      <h2 class="want">You may want to...</h2>
+      <div class="cards">
+        <div class="card" data-open="soon" style="cursor:pointer" role="button" tabindex="0">
+          <svg viewBox="0 0 24 30" fill="#e0812d"><path d="M12 0C6 0 1 4.8 1 10.8 1 18.5 12 30 12 30s11-11.5 11-19.2C23 4.8 18 0 12 0zm0 15a4.3 4.3 0 110-8.6A4.3 4.3 0 0112 15z"/></svg>
+          Find a Test Center
+        </div>
+        <div class="card">
+          <svg viewBox="0 0 36 30" fill="none" stroke="#e0812d" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="24" height="17" rx="2"/><path d="M2 25h32M18 8v8M14 12h8"/></svg>
+          Try Practice Materials
+        </div>
+        <div class="card">
+          <svg viewBox="0 0 36 30" fill="#e0812d"><circle cx="13" cy="8" r="6"/><path d="M1 28c0-7 5-11 12-11 3 0 5.500.7 7.500 2L14 25l-1 4H1z"/><path d="M30 13l4 4-11 11-5 1 1-5z"/></svg>
+          Update Your Profile
+        </div>
+      </div>
+    </section>
+
+    <section class="panel" id="p2">
+      <div class="locked">
+        <div class="row">
+          <svg viewBox="0 0 34 42" fill="#e0812d"><path d="M17 0c-5.500 0-9.500 4-9.500 9.500V16H4a3 3 0 00-3 3v20a3 3 0 003 3h26a3 3 0 003-3V19a3 3 0 00-3-3h-3.500V9.500C26.500 4 22.500 0 17 0zm0 5c2.700 0 4.500 1.900 4.500 4.500V16h-9V9.500C12.500 6.900 14.300 5 17 5z"/></svg>
+          <h2>Step 2 CK</h2>
+        </div>
+        <p>Complete the previous steps to continue.</p>
+      </div>
+    </section>
+
+    <section class="panel" id="p3">
+      <div class="locked">
+        <div class="row">
+          <svg viewBox="0 0 34 42" fill="#e0812d"><path d="M17 0c-5.500 0-9.500 4-9.500 9.500V16H4a3 3 0 00-3 3v20a3 3 0 003 3h26a3 3 0 003-3V19a3 3 0 00-3-3h-3.500V9.500C26.500 4 22.500 0 17 0zm0 5c2.700 0 4.500 1.900 4.500 4.500V16h-9V9.500C12.500 6.900 14.300 5 17 5z"/></svg>
+          <h2>Step 3</h2>
+        </div>
+        <p>Complete the previous steps to continue.</p>
+      </div>
+    </section>
+  </main>
+
+  <aside>
+    <div class="box b1">
+      <h3>Prepare for Test Day</h3>
+      <a href="#" data-open="soon">Finding a testing center</a>
+      <a href="#" class="gap">Getting ready for the test</a>
+      <a href="#">Test Day – What you need to know</a>
+    </div>
+    <div class="box b2">
+      <h3>Resources</h3>
+      <a href="#" data-open="ann">Announcements</a>
+      <a href="#" data-open="elig">Eligibility Requirements</a>
+      <a href="#" data-open="faq">FAQ</a>
+      <a href="#">Free Practice Materials</a>
+      <a href="#">Bulletin of Information</a>
+      <a href="#">Transcripts Overview</a>
+    </div>
+    <div class="box b3">
+      <h3>Useful Links</h3>
+      <a href="#">Physician Portal</a>
+    </div>
+  </aside>
+</div>
+
+<footer>
+  <span>© 2026 Medical Licensing Examination</span>
+  <nav><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Accessibility</a></nav>
+</footer>
+<div class="after"></div>
+
+<button class="help" data-open="faq" aria-label="Help">
+  <svg viewBox="0 0 32 32" fill="none" stroke="#fff" stroke-width="2.2" stroke-linecap="round"><circle cx="16" cy="16" r="12"/><path d="M12.500 13a3.500 3.500 0 117 .5c0 2-3.500 2.500-3.500 4.500M16 22.500v.5"/></svg>
+</button>
+
+<!-- FIND A TEST CENTER MODAL -->
+<div class="overlay" id="m-soon">
+  <div class="modal" style="width:520px" role="dialog" aria-label="Find a Test Center">
+    <div class="m-head">
+      <h2><svg viewBox="0 0 24 30" fill="#fff"><path d="M12 0C6 0 1 4.8 1 10.8 1 18.5 12 30 12 30s11-11.5 11-19.2C23 4.8 18 0 12 0zm0 15a4.3 4.3 0 110-8.6A4.3 4.3 0 0112 15z"/></svg>Find a Test Center</h2>
+      <button class="m-close" data-close aria-label="Close"><svg viewBox="0 0 18 18" stroke="#fff" stroke-width="2.800" stroke-linecap="round"><path d="M2 2l14 14M16 2L2 16"/></svg></button>
+    </div>
+    <div class="m-body" style="padding:34px 26px 38px">
+      <p style="font-size:20px;font-weight:500;color:var(--ink);line-height:1.4">Available as soon as dates announced</p>
+    </div>
+  </div>
+</div>
+
+<!-- FAQ MODAL -->
+<div class="overlay" id="m-faq">
+  <div class="modal" role="dialog" aria-label="Frequently Asked Questions">
+    <div class="m-head">
+      <h2><svg viewBox="0 0 22 22"><circle cx="11" cy="11" r="11" fill="#fff"/><path d="M7.800 8.600a3.200 3.200 0 116.400.3c0 1.800-3.200 2.200-3.200 4M11 16v.5" fill="none" stroke="#0b6bb0" stroke-width="2" stroke-linecap="round"/></svg>Frequently Asked Questions</h2>
+      <button class="m-close" data-close aria-label="Close"><svg viewBox="0 0 18 18" stroke="#fff" stroke-width="2.800" stroke-linecap="round"><path d="M2 2l14 14M16 2L2 16"/></svg></button>
+    </div>
+    <div class="m-body">
+      <div class="faq"><button><span>When will my test date appear?</span><svg viewBox="0 0 16 16" fill="none" stroke="#0a3560" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11l6-6 6 6"/></svg></button><div class="a">Once your appointment is confirmed, your test date will show on your dashboard under the Step 1 tab.</div></div>
+      <div class="faq"><button><span>Can I extend my eligibility period?</span><svg viewBox="0 0 16 16" fill="none" stroke="#0a3560" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11l6-6 6 6"/></svg></button><div class="a">A one-time, three-month extension may be available for a fee. Contact us before your period ends.</div></div>
+      <div class="faq"><button><span>What ID do I need on test day?</span><svg viewBox="0 0 16 16" fill="none" stroke="#0a3560" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11l6-6 6 6"/></svg></button><div class="a">An unexpired, government-issued photo ID with your signature. The name must match your registration exactly.</div></div>
+      <div class="faq"><button><span>How soon are scores released?</span><svg viewBox="0 0 16 16" fill="none" stroke="#0a3560" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11l6-6 6 6"/></svg></button><div class="a">Typically within three to four weeks of your test date. You'll get an email when your score is ready.</div></div>
+      <div class="faq"><button><span>How do I update my name or contact details?</span><svg viewBox="0 0 16 16" fill="none" stroke="#0a3560" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"><path d="M2 11l6-6 6 6"/></svg></button><div class="a">Use "Update Your Profile" on your dashboard or contact us. Name changes can't be made in the final week before testing.</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ANNOUNCEMENTS MODAL -->
+<div class="overlay" id="m-ann">
+  <div class="modal" role="dialog" aria-label="Announcements">
+    <div class="m-head">
+      <h2><svg viewBox="0 0 24 22" fill="#fff"><path d="M20 1v14L9 11H4a2 2 0 01-2-2V7a2 2 0 012-2h5zM6 13h4l1 6a1.500 1.500 0 01-1.500 1.500h-1A1.500 1.500 0 016.900 19z"/><rect x="21" y="6" width="3" height="4" rx="1"/></svg>Announcements</h2>
+      <button class="m-close" data-close aria-label="Close"><svg viewBox="0 0 18 18" stroke="#fff" stroke-width="2.800" stroke-linecap="round"><path d="M2 2l14 14M16 2L2 16"/></svg></button>
+    </div>
+    <div class="m-body flush">
+      <div class="ann"><div class="date"><span class="mo">OCT</span><span class="d">28</span></div><div><div class="cat">Testing</div><h4>Additional test center capacity in India</h4><p>New seats have been added in several cities for the October–December 2026 eligibility period.</p></div></div>
+      <div class="ann"><div class="date"><span class="mo">OCT</span><span class="d">14</span></div><div><div class="cat">Scores</div><h4>Score reporting timelines for Q4 2026</h4><p>Results are usually released within three to four weeks of your test date.</p></div></div>
+      <div class="ann"><div class="date"><span class="mo">SEP</span><span class="d">30</span></div><div><div class="cat">Practice</div><h4>Updated free practice materials available</h4><p>Refreshed sample questions and a tutorial on the exam software are now online.</p></div></div>
+      <div class="ann"><div class="date"><span class="mo">SEP</span><span class="d">09</span></div><div><div class="cat">Policy</div><h4>Reminder: ID name matching requirements</h4><p>The name on your government ID must match your registration record. Contact us early if they differ.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- ELIGIBILITY MODAL -->
+<div class="overlay" id="m-elig">
+  <div class="modal" role="dialog" aria-label="Eligibility Requirements">
+    <div class="m-head">
+      <h2><svg viewBox="0 0 26 22" fill="#fff"><circle cx="9" cy="6" r="5"/><path d="M0 21c0-6 4-9 9-9s9 3 9 9z"/><path d="M17 9l3 3 5-6" fill="none" stroke="#fff" stroke-width="2.200" stroke-linecap="round" stroke-linejoin="round"/></svg>Eligibility Requirements</h2>
+      <button class="m-close" data-close aria-label="Close"><svg viewBox="0 0 18 18" stroke="#fff" stroke-width="2.800" stroke-linecap="round"><path d="M2 2l14 14M16 2L2 16"/></svg></button>
+    </div>
+    <div class="m-body">
+      <div class="status"><b>Your status:</b> Eligible for Step 1 · October 1 – December 31, 2026 · Region: India</div>
+
+      <h3>Step 1 &amp; Step 2 CK</h3>
+      <ul class="checks">
+        <li><i><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.500l3 3 5-6"/></svg></i>Enrolled in, or graduated from, an accredited medical school program.</li>
+        <li><i><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.500l3 3 5-6"/></svg></i>International medical students and graduates must apply through the designated certification body.</li>
+        <li><i><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.500l3 3 5-6"/></svg></i>Must test within the assigned three-month eligibility period.</li>
+      </ul>
+
+      <h3>Step 3</h3>
+      <ul class="checks">
+        <li><i><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.500l3 3 5-6"/></svg></i>Passed Step 1 and Step 2 CK.</li>
+        <li><i><svg viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 6.500l3 3 5-6"/></svg></i>Obtained an MD/DO degree or equivalent and required certification.</li>
+      </ul>
+
+      <h3>Attempt limits</h3>
+      <p class="small">Each Step may be attempted a limited number of times. Review the Bulletin of Information for current limits and retake waiting periods.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Tabs
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+  tabs.forEach(t => t.addEventListener('click', () => {
+    tabs.forEach(x => x.classList.toggle('active', x === t));
+    panels.forEach(p => p.classList.toggle('show', p.id === t.dataset.tab));
+  }));
+
+  // Modals
+  const openModal = id => document.getElementById('m-' + id).classList.add('show');
+  const closeAll = () => document.querySelectorAll('.overlay').forEach(o => o.classList.remove('show'));
+  document.querySelectorAll('[data-open]').forEach(el => el.addEventListener('click', e => {
+    e.preventDefault();
+    openModal(el.dataset.open);
+  }));
+  document.querySelectorAll('[data-close]').forEach(el => el.addEventListener('click', closeAll));
+  document.querySelectorAll('.overlay').forEach(o => o.addEventListener('click', e => { if (e.target === o) closeAll(); }));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAll(); });
+
+  // FAQ accordion (all open by default, click to collapse)
+  document.querySelectorAll('.faq button').forEach(b => b.addEventListener('click', () => b.parentElement.classList.toggle('closed')));
+
+  // Prevent dummy links from jumping to top
+  document.querySelectorAll('a[href="#"]').forEach(a => a.addEventListener('click', e => e.preventDefault()));
+</script>
+</body>
+</html>
